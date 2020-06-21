@@ -12,3 +12,12 @@ eureka:
     #以下两个属性，默认就是true
 #    register-with-eureka: true
 #    fetch-registry: true
+
+
+#设置路由规则
+zuul:
+  routes:
+    userApi:
+      path: /home/**
+      stripPrefix: false
+      serviceId: user
