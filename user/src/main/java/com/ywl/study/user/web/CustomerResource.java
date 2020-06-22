@@ -1,8 +1,11 @@
 package com.ywl.study.user.web;
 
 
+import com.netflix.discovery.converters.Auto;
+import com.ywl.study.dto.OrderDTO;
 import com.ywl.study.user.dao.CustomerRepository;
 import com.ywl.study.user.domain.Customer;
+import com.ywl.study.user.feign.OrderClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +33,9 @@ public class CustomerResource {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    OrderClient orderClient;
+
     @PostMapping("")
     public Customer create(@RequestBody Customer customer) {
         return customerRepository.save(customer);
@@ -38,6 +44,16 @@ public class CustomerResource {
     @GetMapping("")
     public List<Customer> getAll(){
         return customerRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Map getMyInfo(@PathVariable Long id){
+        Customer customer = customerRepository.findOneByUsername("imooc");
+        OrderDTO order = orderClient.getMyOrder(1l);
+        Map result = new HashMap();
+        result.put("customer", customer);
+        result.put("order", order);
+        return result;
     }
 
 }

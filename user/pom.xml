@@ -58,6 +58,11 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <!--监控访问user的请求-->
+        <dependency>
+            <groupId>com.ywl.study</groupId>
+            <artifactId>service</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>

@@ -69,3 +69,36 @@ spring-cloud-starter-hystrix-dashboard
         public String get() {
             return "Welcome!";
         }
+----
+
+###演示user服务访问order服务
+user的pom中增加
+
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-openfeign</artifactId>
+     </dependency>             
+               
+启动类上增加
+
+    @EnableFeignClients
+    
+新增feignClient
+    
+    @FeignClient(value = "order",path = "/api/order")
+    public interface OrderClient{
+    
+        /**
+         * 对于feign的规范，其中@PathVariable中name必须要写，否则报错
+         * @param id
+         * @return
+         */
+        @GetMapping("/{id}")
+        String getMyOrder(@PathVariable(name = "id") Long id);
+    
+    
+    }
+    
+    
+----
+zuul proxy默认的请求超时时间是很短的，代理服务需要设置请求超时时间----具体实现方式待研究    
